@@ -34,6 +34,7 @@ namespace DomainLayer.Models
         public bool IsUpdated { get; set; } = false;
 
         public bool IsSubscribed { get; set; } = false;
+        public string? sessionId { get; set; }
         public List<string> PreferredLanguages { get; set; } = new List<string>();
         public List<string> FocusAreas { get; set; } = new List<string>();
     }
