@@ -35,11 +35,12 @@ namespace DomainLayer.Models
 
         public bool IsSubscribed { get; set; } = false;
         public string? sessionId { get; set; }
-        public List<string> PreferredLanguages { get; set; } = new List<string>();
-        public List<string> FocusAreas { get; set; } = new List<string>();
+        public ICollection<Language> PreferredLanguages { get; set; } = new List<Language>();
+        public ICollection<FocusArea> FocusAreas { get; set; } = new List<FocusArea>();
         public Rate? rate { get; set; }
         public RoadMap? RoadMap { get; set; }
         public int? MentorId { get; set; }
         public Mentor? Mentor { get; set; }
     }
+
 }
