@@ -19,15 +19,19 @@ namespace DomainLayer.Models
         public int TraineeId { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Name { get; set; } = null!;
 
         [Required]
+        [MaxLength(100)]
         public string Email { get; set; } = null!;
-
+        [MaxLength(200)]
         public string? PictureUrl { get; set; }
         [Required]
+        [MaxLength(50), MinLength(8)]
         public required string Password { get; set; }
         [Required]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "Phone number must be exactly 11 digits.")]
         public required string Phone { get; set; }
 
         public Level Level { get; set; } = Level.Beginner;
@@ -35,6 +39,7 @@ namespace DomainLayer.Models
         public bool IsUpdated { get; set; } = false;
 
         public bool IsSubscribed { get; set; } = false;
+        [MaxLength(100)]
         public string? SessionId { get; set; }
         public ICollection<Language> PreferredLanguages { get; set; } = new List<Language>();
         public ICollection<FocusArea> FocusAreas { get; set; } = new List<FocusArea>();

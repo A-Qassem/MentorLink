@@ -10,14 +10,17 @@ namespace DomainLayer.Models
     public class Mentor
     {
         public int MentorId { get; set; }
-        [Required]
+        [Required,MaxLength(50)]
         public string Name { get; set; } = null!;
-        [Required]
+        [Required,MaxLength(100)]
         public string Email { get; set; } = null!;
+        [MaxLength(100)]
         public string? PictureUrl { get; set; }
+        [MaxLength(50),MinLength(8)]
         public required string Password { get; set; }
         public required string Phone { get; set; }
         public string? Description { get; set; }
+        [MaxLength(100)]
         public string? JobTitle { get; set; }
         public int Price { get; set; }
         public bool IsAvailable { get; set; } = true;

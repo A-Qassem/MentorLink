@@ -7,6 +7,7 @@ namespace DomainLayer.Models
     {
         [Key]
         public string PhaseId { get; set; }
+        [MaxLength(100)]
         public string? Title { get; set; }
         public int? Month { get; set; }
         public int? Weeks { get; set; }

@@ -5,7 +5,7 @@
 namespace Presistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Intiall : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace Presistence.Migrations
                 {
                     FocusAreaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +29,7 @@ namespace Presistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SkillName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SkillName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +42,7 @@ namespace Presistence.Migrations
                 {
                     LanguageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,13 +55,13 @@ namespace Presistence.Migrations
                 {
                     MentorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PictureUrl = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Price = table.Column<int>(type: "int", nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -76,7 +76,7 @@ namespace Presistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Requirement = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Requirement = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,7 +89,7 @@ namespace Presistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     MentorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -109,7 +109,7 @@ namespace Presistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     MentorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -129,15 +129,15 @@ namespace Presistence.Migrations
                 {
                     TraineeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PictureUrl = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
                     IsUpdated = table.Column<bool>(type: "bit", nullable: false),
                     IsSubscribed = table.Column<bool>(type: "bit", nullable: false),
-                    SessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SessionId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     MentorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -254,7 +254,7 @@ namespace Presistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Outcome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Outcome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     RoadMapId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -273,7 +273,7 @@ namespace Presistence.Migrations
                 columns: table => new
                 {
                     PhaseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Month = table.Column<int>(type: "int", nullable: true),
                     Weeks = table.Column<int>(type: "int", nullable: true),
                     RoadMapId = table.Column<int>(type: "int", nullable: false)
@@ -343,7 +343,7 @@ namespace Presistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PhaseId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
