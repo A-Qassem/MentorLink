@@ -37,5 +37,7 @@ namespace DomainLayer.Models
         public string? sessionId { get; set; }
         public List<string> PreferredLanguages { get; set; } = new List<string>();
         public List<string> FocusAreas { get; set; } = new List<string>();
+        public Rate? rate { get; set; }
+        public RoadMap? RoadMap { get; set; }
     }
 }

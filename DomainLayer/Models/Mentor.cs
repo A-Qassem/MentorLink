@@ -23,5 +23,6 @@ namespace DomainLayer.Models
         public bool IsAvailable { get; set; } = true;
         public List<string> Tags { get; set; } = new List<string>();
         public List<string> Skills { get; set; } = new List<string>();
+        public Rate? rate { get; set; }
     }
 }
