@@ -24,5 +24,7 @@ namespace DomainLayer.Models
         public List<string> Tags { get; set; } = new List<string>();
         public List<string> Skills { get; set; } = new List<string>();
         public Rate? rate { get; set; }
+        public List<Trainee> Trainees { get; set; } = new List<Trainee>();
+
     }
 }

@@ -18,6 +18,10 @@ namespace Presistence.Data.Configs
                    .HasForeignKey<RoadMap>(RoadMap => RoadMap.TraineeId)
                    .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(t=>t.Mentor)
+                .WithMany(m=>m.Trainees)
+                   .HasForeignKey(t=>t.MentorId)
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

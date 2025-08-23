@@ -39,5 +39,7 @@ namespace DomainLayer.Models
         public List<string> FocusAreas { get; set; } = new List<string>();
         public Rate? rate { get; set; }
         public RoadMap? RoadMap { get; set; }
+        public int? MentorId { get; set; }
+        public Mentor? Mentor { get; set; }
     }
 }
