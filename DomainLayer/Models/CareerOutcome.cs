@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Outcome { get; set; } = null!;
-        public RoadMap roadMap { get; set; }
+        public int RoadMapId { get; set; }
+        public RoadMap? RoadMap { get; set; }
     }
 }

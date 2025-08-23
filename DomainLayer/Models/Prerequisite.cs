@@ -4,6 +4,6 @@
     {
         public int Id { get; set; } 
         public string Requirement { get; set; } = null!;
-        public ICollection<Phase> Phase { get; set; } = new List<Phase>();
+        public ICollection<Phase> Phases { get; set; } = new List<Phase>();
     }
 }

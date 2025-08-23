@@ -13,7 +13,7 @@ namespace DomainLayer.Models
         public string? Description { get; set; }
         public int Total_Months { get; set; }
         public int Total_Hours { get; set; }
-        public Level Diffculty_Level { get; set; }  
+        public Level DifficultyLevel { get; set; }  
         public List<Phase> Phases { get; set; } = new List<Phase>();
         public ICollection<CareerOutcome> Career_Outcomes { get; set; } = new List<CareerOutcome>();
         public int TraineeId { get; set; }

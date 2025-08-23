@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,14 +14,17 @@ namespace Presistence.Data.Configs
     {
         public void Configure(EntityTypeBuilder<Rate> builder)
         {
-            builder.HasMany(t => t.trainees)
-                .WithOne(r => r.rate)
-                .HasForeignKey(t=> t.TraineeId)
+            builder.HasKey(r => new { r.TraineeId, r.MentorId });
+
+            builder.HasOne(r => r.Trainee)
+                .WithMany(t => t.Rates) 
+                .HasForeignKey(r => r.TraineeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(m => m.mentors)
-                .WithOne(r => r.rate)
-                .HasForeignKey(t=> t.MentorId)
+                builder
+                .HasOne(r => r.Mentor)
+                .WithMany(m => m.Rates)
+                .HasForeignKey(r => r.MentorId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

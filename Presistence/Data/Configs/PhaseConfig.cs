@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,17 +16,21 @@ namespace Presistence.Data.Configs
         public void Configure(EntityTypeBuilder<Phase> builder)
         {
             builder
-                .HasOne(r => r.RoadMap)
-                .WithMany(ph => ph.Phases)
-                .HasForeignKey(r => r.RoadMapId);
+            .HasOne(p => p.RoadMap)
+            .WithMany(r => r.Phases)
+            .HasForeignKey(p => p.RoadMapId)
+            .OnDelete(DeleteBehavior.Cascade);
+
             builder
-                .HasMany(sk=> sk.Skills_Gained)
-                .WithMany(p=> p.Phase)
-                .UsingEntity(j=> j.ToTable("Phase_GainedSkills"));
+            .HasMany(p => p.Skills_Gained)
+            .WithMany(s => s.Phases)
+            .UsingEntity(j => j.ToTable("PhaseGainedSkills"));
+
             builder
-                .HasMany(pr=> pr.Prerequisites)
-                .WithMany(p=> p.Phase)
-                .UsingEntity(j=> j.ToTable("Phase_Prerequisites"));
+            .HasMany(p => p.Prerequisites)
+            .WithMany(pr => pr.Phases)
+            .UsingEntity(j => j.ToTable("PhasePrerequisites"));
+
             /* builder
                  .Property(sk=>sk.Skills_Gained)
                  .HasColumnType("nvarchar(max)")

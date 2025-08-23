@@ -25,8 +25,9 @@ namespace DomainLayer.Models
         public string Email { get; set; } = null!;
 
         public string? PictureUrl { get; set; }
-
+        [Required]
         public required string Password { get; set; }
+        [Required]
         public required string Phone { get; set; }
 
         public Level Level { get; set; } = Level.Beginner;
@@ -34,10 +35,11 @@ namespace DomainLayer.Models
         public bool IsUpdated { get; set; } = false;
 
         public bool IsSubscribed { get; set; } = false;
-        public string? sessionId { get; set; }
+        public string? SessionId { get; set; }
         public ICollection<Language> PreferredLanguages { get; set; } = new List<Language>();
         public ICollection<FocusArea> FocusAreas { get; set; } = new List<FocusArea>();
-        public Rate? rate { get; set; }
+        public ICollection<Rate> Rates { get; set; } = new List<Rate>();
+
         public RoadMap? RoadMap { get; set; }
         public int? MentorId { get; set; }
         public Mentor? Mentor { get; set; }

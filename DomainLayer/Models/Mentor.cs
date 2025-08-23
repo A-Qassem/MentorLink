@@ -18,12 +18,12 @@ namespace DomainLayer.Models
         public required string Password { get; set; }
         public required string Phone { get; set; }
         public string? Description { get; set; }
-        public string? JopTitle { get; set; }
-        public decimal Price { get; set; }
+        public string? JobTitle { get; set; }
+        public int Price { get; set; }
         public bool IsAvailable { get; set; } = true;
-        public List<string> Tags { get; set; } = new List<string>();
-        public List<string> Skills { get; set; } = new List<string>();
-        public Rate? rate { get; set; }
+        public ICollection<Tag> Tags { get; set; } = new List<Tag>();
+        public ICollection<Skill> Skills { get; set; } = new List<Skill>();
+        public ICollection<Rate> Rates { get; set; } = new List<Rate>();
         public List<Trainee> Trainees { get; set; } = new List<Trainee>();
 
     }

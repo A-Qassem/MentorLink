@@ -14,11 +14,19 @@ namespace Presistence.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<FocusArea> FocusAreas { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<GainedSkill> GainedSkills { get; set; }
+        public DbSet<RecommendedCourse> RecommendedCourses { get; set; }
+        public DbSet<Prerequisite> Prerequisites { get; set; }
+        public DbSet<CareerOutcome> CareerOutcomes { get; set; }
+        public DbSet<RoadMap> RoadMaps { get; set; }
         public DbSet<Trainee> Trainees { get; set; }
         public DbSet<Mentor> Mentors { get; set; }
-        public DbSet<RoadMap> RoadMaps { get; set; }
-        public DbSet<Phase> Phases { get; set; }
         public DbSet<Rate> Rates { get; set; }
+        public DbSet<Phase> Phases { get; set; }
 
     }
 }
