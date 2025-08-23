@@ -12,11 +12,10 @@ namespace DomainLayer.Models
         public int Month { get; set; }
         [AllowNull]
         public int Weeks { get; set; }
-        public List<string> Skills_Gained { get; set; } = new List<string>();
-
-        public List<string> Recommended_Courses { get; set; } = new List<string>();
-
-        public List<string> Prerequisites { get; set; } = new List<string>();
+        public ICollection<GainedSkill> Skills_Gained { get; set; } = new List<GainedSkill>();  
+        public ICollection<RecommendedCourse> Recommended_Courses { get; set; } = new List<RecommendedCourse>();
+        public ICollection<Prerequisite> Prerequisites { get; set; } = new List<Prerequisite>();
+        public int RoadMapId { get; set; }
         public RoadMap? RoadMap { get; set; }
     }
 }

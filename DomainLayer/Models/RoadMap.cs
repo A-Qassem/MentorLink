@@ -15,7 +15,7 @@ namespace DomainLayer.Models
         public int Total_Hours { get; set; }
         public Level Diffculty_Level { get; set; }  
         public List<Phase> Phases { get; set; } = new List<Phase>();
-        public List<string> Career_Outcomes { get; set; } = new List<string>();
+        public ICollection<CareerOutcome> Career_Outcomes { get; set; } = new List<CareerOutcome>();
         public int TraineeId { get; set; }
         public Trainee? Trainee { get; set; }    
     }
