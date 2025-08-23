@@ -1,6 +1,5 @@
 ﻿using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
-using Presistence.Data.Configs;
 namespace Presistence.Data
 {
     public class AppDbContext : DbContext
@@ -15,10 +14,11 @@ namespace Presistence.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        DbSet<Trainee> Trainees { get; set; }
-        DbSet<Mentor> Mentors { get; set; }
-        DbSet<RoadMap> RoadMaps { get; set; }
-        DbSet<Phase> Phases { get; set; }
-        DbSet<Rate> Rates { get; set; }
+        public DbSet<Trainee> Trainees { get; set; }
+        public DbSet<Mentor> Mentors { get; set; }
+        public DbSet<RoadMap> RoadMaps { get; set; }
+        public DbSet<Phase> Phases { get; set; }
+        public DbSet<Rate> Rates { get; set; }
+
     }
 }

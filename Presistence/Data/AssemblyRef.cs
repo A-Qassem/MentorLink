@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presistence.Data.Configs
+namespace Presistence.Data
 {
     public class AssemblyRef{}
 }
