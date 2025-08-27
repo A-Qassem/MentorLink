@@ -11,6 +11,10 @@ namespace Presistence.Repositories
     public class UnitOfWork(AppDbContext _dbContext) : IUnitOfWork
     {
         private Dictionary<string ,object> _repositories = new Dictionary<string ,object>();
+        private ITraineeRepository? _trainees;
+        
+        public ITraineeRepository Trainees => _trainees ??= new TraineeRepository(_dbContext);
+        
         public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             var typeName = typeof(TEntity).Name;

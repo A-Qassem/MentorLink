@@ -5,7 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
- <ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DataTransferObjects\" />
   </ItemGroup>
 </Project>

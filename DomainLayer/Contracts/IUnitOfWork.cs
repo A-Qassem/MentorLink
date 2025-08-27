@@ -10,5 +10,6 @@ namespace DomainLayer.Contracts
     {
         Task<int> SaveChangesAsync();
         IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
+        ITraineeRepository Trainees { get; }
     }
 }
