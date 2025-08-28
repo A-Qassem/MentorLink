@@ -6,7 +6,6 @@ using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceAbstraction;
 using Shared.DataTransferObjects;
-using ServiceAbstraction;
 
 namespace Service
 {
@@ -218,7 +217,7 @@ namespace Service
                 };
             }
 
-            // Generate reset code (6 digits)
+            // Generate reset code (5 digits)
             var resetCode = GenerateResetCode();
             var expiresAt = DateTime.UtcNow.AddMinutes(15); // 15 minutes expiration
 
