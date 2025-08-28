@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceAbstraction
+namespace Service
 {
     public interface IAuthService
     {
@@ -13,5 +13,8 @@ namespace ServiceAbstraction
         Task<AuthResponseDto> SignInAsync(SignInDto signInDto);
         Task<AuthResponseDto> RefreshTokenAsync(string refreshToken);
         Task<bool> RevokeTokenAsync(string refreshToken);
+        Task<PasswordResetResponseDto> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto);
+        Task<PasswordResetResponseDto> VerifyCodeAsync(VerifyCodeDto verifyCodeDto);
+        Task<PasswordResetResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto);
     }
 }

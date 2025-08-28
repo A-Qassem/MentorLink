@@ -27,6 +27,7 @@ namespace Presistence.Data
         public DbSet<Mentor> Mentors { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Phase> Phases { get; set; }
+        public DbSet<PasswordReset> PasswordResets { get; set; }
 
     }
 }

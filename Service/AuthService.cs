@@ -6,6 +6,7 @@ using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceAbstraction;
 using Shared.DataTransferObjects;
+using ServiceAbstraction;
 
 namespace Service
 {
@@ -13,11 +14,13 @@ namespace Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IJwtService _jwtService;
+        private readonly IEmailService _emailService;
 
-        public AuthService(IUnitOfWork unitOfWork, IJwtService jwtService)
+        public AuthService(IUnitOfWork unitOfWork, IJwtService jwtService, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _jwtService = jwtService;
+            _emailService = emailService;
         }
 
         public async Task<AuthResponseDto> SignUpAsync(SignUpDto signUpDto)
@@ -200,6 +203,127 @@ namespace Service
         {
             var hashedPassword = HashPassword(password);
             return hashedPassword == hash;
+        }
+
+        public async Task<PasswordResetResponseDto> ForgotPasswordAsync(ForgotPasswordDto forgotPasswordDto)
+        {
+            // Check if email exists
+            var trainee = await _unitOfWork.Trainees.GetByEmailAsync(forgotPasswordDto.Email);
+            if (trainee == null)
+            {
+                return new PasswordResetResponseDto
+                {
+                    Success = false,
+                    Message = "If the email exists, a reset code will be sent to it."
+                };
+            }
+
+            // Generate reset code (6 digits)
+            var resetCode = GenerateResetCode();
+            var expiresAt = DateTime.UtcNow.AddMinutes(15); // 15 minutes expiration
+
+            // Invalidate any existing reset codes for this email
+            await _unitOfWork.PasswordResets.InvalidateResetCodesForEmailAsync(forgotPasswordDto.Email);
+
+            // Save new reset code
+            var passwordReset = new PasswordReset
+            {
+                Email = forgotPasswordDto.Email,
+                ResetCode = resetCode,
+                CreatedAt = DateTime.UtcNow,
+                ExpiresAt = expiresAt,
+                IsUsed = false
+            };
+
+            await _unitOfWork.PasswordResets.AddAsync(passwordReset);
+            await _unitOfWork.SaveChangesAsync();
+
+            // Send email
+            var emailSent = await _emailService.SendPasswordResetEmailAsync(forgotPasswordDto.Email, resetCode, expiresAt);
+
+            return new PasswordResetResponseDto
+            {
+                Success = true,
+                Message = "If the email exists, a reset code will be sent to it.",
+                ExpiresAt = expiresAt
+            };
+        }
+
+        public async Task<PasswordResetResponseDto> VerifyCodeAsync(VerifyCodeDto verifyCodeDto)
+        {
+            var resetCode = await _unitOfWork.PasswordResets.GetValidResetCodeAsync(verifyCodeDto.Email, verifyCodeDto.ResetCode);
+            
+            if (resetCode == null)
+            {
+                return new PasswordResetResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid or expired reset code"
+                };
+            }
+
+            return new PasswordResetResponseDto
+            {
+                Success = true,
+                Message = "Reset code is valid"
+            };
+        }
+
+        public async Task<PasswordResetResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
+        {
+            // Verify reset code
+            var resetCode = await _unitOfWork.PasswordResets.GetValidResetCodeAsync(resetPasswordDto.Email, resetPasswordDto.ResetCode);
+            
+            if (resetCode == null)
+            {
+                return new PasswordResetResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid or expired reset code"
+                };
+            }
+
+            // Find trainee
+            var trainee = await _unitOfWork.Trainees.GetByEmailAsync(resetPasswordDto.Email);
+            if (trainee == null)
+            {
+                return new PasswordResetResponseDto
+                {
+                    Success = false,
+                    Message = "User not found"
+                };
+            }
+
+            // Hash new password
+            var newPasswordHash = HashPassword(resetPasswordDto.NewPassword);
+
+            // Update password
+            trainee.PasswordHash = newPasswordHash;
+
+            // Invalidate reset code
+            resetCode.IsUsed = true;
+            resetCode.UsedAt = DateTime.UtcNow;
+
+            // Invalidate any other reset codes for this email
+            await _unitOfWork.PasswordResets.InvalidateResetCodesForEmailAsync(resetPasswordDto.Email);
+
+            // Clear refresh tokens
+            trainee.RefreshToken = null;
+            trainee.RefreshTokenExpiryTime = null;
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return new PasswordResetResponseDto
+            {
+                Success = true,
+                Message = "Password has been reset successfully"
+            };
+        }
+
+        private string GenerateResetCode()
+        {
+            var random = new Random();
+            return random.Next(10000, 99999).ToString(); // 5-digit code
         }
     }
 }
