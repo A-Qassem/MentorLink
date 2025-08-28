@@ -12,8 +12,10 @@ namespace Presistence.Repositories
     {
         private Dictionary<string ,object> _repositories = new Dictionary<string ,object>();
         private ITraineeRepository? _trainees;
+        private IPasswordResetRepository? _passwordResets;
         
         public ITraineeRepository Trainees => _trainees ??= new TraineeRepository(_dbContext);
+        public IPasswordResetRepository PasswordResets => _passwordResets ??= new PasswordResetRepository(_dbContext);
         
         public IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

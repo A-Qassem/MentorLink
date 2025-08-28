@@ -98,5 +98,67 @@ namespace MentorLink.Controllers
 
             return Ok(new { Success = true, Message = "Logged out successfully" });
         }
+
+        [HttpPost("forgot-password")]
+        public async Task<ActionResult<PasswordResetResponseDto>> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new PasswordResetResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid input data"
+                });
+            }
+
+            var result = await _authService.ForgotPasswordAsync(forgotPasswordDto);
+            
+            // Always return success to prevent email enumeration
+            return Ok(result);
+        }
+
+        [HttpPost("verify-code")]
+        public async Task<ActionResult<PasswordResetResponseDto>> VerifyCode([FromBody] VerifyCodeDto verifyCodeDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new PasswordResetResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid input data"
+                });
+            }
+
+            var result = await _authService.VerifyCodeAsync(verifyCodeDto);
+            
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<ActionResult<PasswordResetResponseDto>> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new PasswordResetResponseDto
+                {
+                    Success = false,
+                    Message = "Invalid input data"
+                });
+            }
+
+            var result = await _authService.ResetPasswordAsync(resetPasswordDto);
+            
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
     }
 }

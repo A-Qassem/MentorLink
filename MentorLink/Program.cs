@@ -28,6 +28,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
