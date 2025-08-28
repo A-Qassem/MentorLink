@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using DomainLayer.Contracts;
 using DomainLayer.Models;
+using Service.Specifications;
 using ServiceAbstraction;
+using Shared;
 using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
@@ -22,11 +24,22 @@ namespace Service
 
         }
 
+        public async Task<IEnumerable<MentorDto>> GetAllMentorsAsync(MentorsQueryParam queryParams)
+        {
+            var Repo = _unitOfWork.GetRepository<Mentor>();
+            var specifications = new MentorSpecification(queryParams);
+            var mentors = await Repo.GetAllAsync(specifications);
+            var mentorDtos = mapper.Map<IEnumerable<Mentor>, IEnumerable<MentorDto>>(mentors);
+            return mentorDtos;
+        }
+
         public async Task<MentorDto> GetMentorById(int id)
         {
             var Repo = _unitOfWork.GetRepository<Mentor>();
-            var mentor = await Repo.GetByIdAsync(id);
+            var specifications = new MentorSpecification(id);
+            var mentor = await Repo.GetByIdAsync(specifications);
             var mentorDto = mapper.Map<Mentor, MentorDto>(mentor);
+            // andle null case if mentor is not found Will be here later
             return mentorDto;
         }
     }

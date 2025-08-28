@@ -10,6 +10,8 @@ namespace DomainLayer.Contracts
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity?> GetByIdAsync(int id);
+        Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity> specifications);
+        Task<TEntity?> GetByIdAsync(ISpecifications<TEntity> specifications);
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
         void Remove(TEntity entity);

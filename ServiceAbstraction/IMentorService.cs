@@ -1,4 +1,5 @@
-﻿using Shared.DataTransferObjects;
+﻿using Shared;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace ServiceAbstraction
 {
     public interface IMentorService
     {
+        Task<IEnumerable<MentorDto>> GetAllMentorsAsync(MentorsQueryParam queryParams);
         Task<IEnumerable<MentorDto>> GetAllMentorsAsync();
         Task<MentorDto> GetMentorById(int id);
     }

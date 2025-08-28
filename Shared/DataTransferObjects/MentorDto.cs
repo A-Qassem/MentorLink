@@ -13,9 +13,10 @@ namespace Shared.DataTransferObjects
         public string? Description { get; set; }
         public string? JobTitle { get; set; }
         public int Price { get; set; }
-        public bool IsAvailable { get; set; } = true;
+        //public bool IsAvailable { get; set; } = true;
         public List<string> Tags { get; set; } = new List<string>();
         public List<string> Skills { get; set; } = new List<string>();
+        public int RateCount { get; set; }
         public double AverageRate { get; set; }
     }
 }

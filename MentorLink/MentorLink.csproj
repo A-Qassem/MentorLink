@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Images\Mentors\" />
   </ItemGroup>
 
 </Project>

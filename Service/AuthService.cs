@@ -4,6 +4,7 @@ using System.Text;
 using DomainLayer.Contracts;
 using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using ServiceAbstraction;
 using Shared.DataTransferObjects;
 
 namespace Service
@@ -200,13 +201,5 @@ namespace Service
             var hashedPassword = HashPassword(password);
             return hashedPassword == hash;
         }
-    }
-
-    public interface IAuthService
-    {
-        Task<AuthResponseDto> SignUpAsync(SignUpDto signUpDto);
-        Task<AuthResponseDto> SignInAsync(SignInDto signInDto);
-        Task<AuthResponseDto> RefreshTokenAsync(string refreshToken);
-        Task<bool> RevokeTokenAsync(string refreshToken);
     }
 }

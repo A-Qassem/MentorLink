@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
+using Shared;
 using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Presentation.Controller
     public class MentorController(IServiceManager _serviceManager) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MentorDto>>> GetAllMentors()
+        public async Task<ActionResult<IEnumerable<MentorDto>>> GetAllMentors([FromQuery] MentorsQueryParam queryParams)
         {
-            var mentors = await _serviceManager.MentorService.GetAllMentorsAsync();
+            var mentors = await _serviceManager.MentorService.GetAllMentorsAsync(queryParams);
             return Ok(mentors);
         }
         [HttpGet("{id}")]

@@ -14,8 +14,19 @@ namespace Presistence.Repositories
         public async Task AddAsync(TEntity entity) => await _dbcontext.Set<TEntity>().AddAsync(entity);
 
         public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbcontext.Set<TEntity>().ToListAsync();
+        // Get all entities based on specifications
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity> specifications)
+        {
+           return await SpecificationEvaluator.CreateQuery(_dbcontext.Set<TEntity>().AsQueryable(), specifications).ToListAsync();
+        }
+        // Get entity by specifications (single entity)
+        public async Task<TEntity?> GetByIdAsync(ISpecifications<TEntity> specifications)
+        {
+           return await SpecificationEvaluator.CreateQuery(_dbcontext.Set<TEntity>(), specifications).FirstOrDefaultAsync();
+        }
 
         public async Task<TEntity?> GetByIdAsync(int id) => await _dbcontext.Set<TEntity>().FindAsync(id);
+
 
         public void Remove(TEntity entity) => _dbcontext.Set<TEntity>().Remove(entity);
 

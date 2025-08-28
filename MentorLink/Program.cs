@@ -8,6 +8,7 @@ using Presistence.Repositories;
 using DomainLayer.Contracts;
 using Service;
 using ServiceAbstraction;
+using Service.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,8 +27,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Services
+builder.Services.AddTransient<PictureUrlResolver>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IServiceManager, ServiceManager>();
+
+builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(AssemblyReference).Assembly));    
+
 
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -80,7 +86,7 @@ app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
 
 app.Run();

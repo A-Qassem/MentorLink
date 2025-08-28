@@ -20,7 +20,7 @@ namespace Service.MappingProfiles
                 return string.Empty;
             else
             {
-                var Url = $"{_configuration.GetSection("Url")["BaseUrl"]}/{source.PictureUrl}";
+                var Url = $"{_configuration.GetSection("Url")["BaseUrl"]}{source.PictureUrl}";
                 return Url;
             }
         }
