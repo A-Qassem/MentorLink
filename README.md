@@ -456,24 +456,4 @@ We welcome contributions! Please follow these steps:
    ```
 7. **Create a Pull Request**
 
-### Development Guidelines
-- Follow C# coding conventions
-- Add XML documentation for public methods
-- Include error handling
-- Write unit tests for new features
-- Update API documentation
 
-## 📝 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Support
-
-For support and questions:
-- **Email**: support@mentorlink.com
-- **Issues**: [GitHub Issues](https://github.com/yourusername/mentorlink-api/issues)
-- **Documentation**: [API Documentation](http://mentorlink.runasp.net/swagger)
-
----
-
-**Built with ❤️ using ASP.NET Core**
