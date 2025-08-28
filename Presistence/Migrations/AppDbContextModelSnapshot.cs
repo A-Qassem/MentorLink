@@ -42,7 +42,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("RoadMapId");
 
-                    b.ToTable("CareerOutcomes");
+                    b.ToTable("CareerOutcomes", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.FocusArea", b =>
@@ -60,7 +60,7 @@ namespace Presistence.Migrations
 
                     b.HasKey("FocusAreaId");
 
-                    b.ToTable("FocusAreas");
+                    b.ToTable("FocusAreas", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.GainedSkill", b =>
@@ -78,7 +78,7 @@ namespace Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GainedSkills");
+                    b.ToTable("GainedSkills", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Language", b =>
@@ -96,7 +96,7 @@ namespace Presistence.Migrations
 
                     b.HasKey("LanguageId");
 
-                    b.ToTable("Languages");
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Mentor", b =>
@@ -145,7 +145,7 @@ namespace Presistence.Migrations
 
                     b.HasKey("MentorId");
 
-                    b.ToTable("Mentors");
+                    b.ToTable("Mentors", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.PasswordReset", b =>
@@ -186,7 +186,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("Email", "ResetCode");
 
-                    b.ToTable("PasswordResets");
+                    b.ToTable("PasswordResets", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Phase", b =>
@@ -211,7 +211,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("RoadMapId");
 
-                    b.ToTable("Phases");
+                    b.ToTable("Phases", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Prerequisite", b =>
@@ -228,7 +228,7 @@ namespace Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Prerequisites");
+                    b.ToTable("Prerequisites", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Rate", b =>
@@ -246,7 +246,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("MentorId");
 
-                    b.ToTable("Rates");
+                    b.ToTable("Rates", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.RecommendedCourse", b =>
@@ -269,7 +269,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("PhaseId");
 
-                    b.ToTable("RecommendedCourses");
+                    b.ToTable("RecommendedCourses", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.RoadMap", b =>
@@ -303,7 +303,7 @@ namespace Presistence.Migrations
                     b.HasIndex("TraineeId")
                         .IsUnique();
 
-                    b.ToTable("RoadMaps");
+                    b.ToTable("RoadMaps", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Skill", b =>
@@ -326,7 +326,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("MentorId");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Tag", b =>
@@ -349,7 +349,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("MentorId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Models.Trainee", b =>
@@ -417,7 +417,7 @@ namespace Presistence.Migrations
 
                     b.HasIndex("MentorId");
 
-                    b.ToTable("Trainees");
+                    b.ToTable("Trainees", (string)null);
                 });
 
             modelBuilder.Entity("FocusAreaTrainee", b =>
