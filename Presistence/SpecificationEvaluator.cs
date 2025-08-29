@@ -28,6 +28,11 @@ namespace Presistence
                 query = query.OrderBy(specifications.OrderBy);
             else if (specifications.OrderByDescending != null)
                 query = query.OrderByDescending(specifications.OrderByDescending);
+            // Apply paging
+            if (specifications.IsPagingEnabled)
+            {
+                query = query.Skip(specifications.Skip).Take(specifications.Take);
+            }
             return query;
         }
     }

@@ -15,7 +15,7 @@ namespace Presentation.Controller
     public class MentorController(IServiceManager _serviceManager) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MentorDto>>> GetAllMentors([FromQuery] MentorsQueryParam queryParams)
+        public async Task<ActionResult<PaginatedResult<MentorDto>>> GetAllMentors([FromQuery] MentorsQueryParam queryParams)
         {
             var mentors = await _serviceManager.MentorService.GetAllMentorsAsync(queryParams);
             return Ok(mentors);

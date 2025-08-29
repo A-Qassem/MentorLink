@@ -24,5 +24,14 @@ namespace Service.Specifications
         protected void AddInclude(Expression<Func<TEntity, object>> includeExperssion) => IncludeExperssions.Add(includeExperssion);
         protected void AddOrderBy(Expression<Func<TEntity, object>> orderByExperssion) => OrderBy = orderByExperssion;
         protected void AddOrderByDescending(Expression<Func<TEntity, object>> orderByDescExperssion) => OrderByDescending = orderByDescExperssion;
+        public int Take { get; private set; }
+        public int Skip { get; private set; }
+        public bool IsPagingEnabled { get;  set; } = false;
+        protected void ApplyPaging(int pageSize, int pageIndex)
+        {
+            IsPagingEnabled = true;
+            Take = pageSize;
+            Skip = (pageIndex - 1) * pageSize;
+        }
     }
 }

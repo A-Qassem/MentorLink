@@ -10,7 +10,7 @@ namespace ServiceAbstraction
 {
     public interface IMentorService
     {
-        Task<IEnumerable<MentorDto>> GetAllMentorsAsync(MentorsQueryParam queryParams);
+        Task<PaginatedResult<MentorDto>> GetAllMentorsAsync(MentorsQueryParam queryParams);
         Task<IEnumerable<MentorDto>> GetAllMentorsAsync();
         Task<MentorDto> GetMentorById(int id);
     }

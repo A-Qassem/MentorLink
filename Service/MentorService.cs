@@ -24,13 +24,15 @@ namespace Service
 
         }
 
-        public async Task<IEnumerable<MentorDto>> GetAllMentorsAsync(MentorsQueryParam queryParams)
+        public async Task<PaginatedResult<MentorDto>> GetAllMentorsAsync(MentorsQueryParam queryParams)
         {
             var Repo = _unitOfWork.GetRepository<Mentor>();
             var specifications = new MentorSpecification(queryParams);
             var mentors = await Repo.GetAllAsync(specifications);
             var mentorDtos = mapper.Map<IEnumerable<Mentor>, IEnumerable<MentorDto>>(mentors);
-            return mentorDtos;
+            var mentorPageSize = mentorDtos.Count();
+            var totalMentors = await Repo.CountAsync(new MentorCountSpecification(queryParams));
+            return new PaginatedResult<MentorDto>(queryParams.PageIndex,mentorPageSize,totalMentors,mentorDtos);
         }
 
         public async Task<MentorDto> GetMentorById(int id)

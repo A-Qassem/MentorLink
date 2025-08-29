@@ -32,7 +32,9 @@ namespace Service.Specifications
                     AddOrderBy(p => p.Name);
                     break;
             }
+            ApplyPaging(queryParam.PageSize, queryParam.PageIndex);
         }
+        
         public MentorSpecification(int id): base(p => p.MentorId == id) // Get Mentor by Id
         {
             AddInclude(p => p.Tags);

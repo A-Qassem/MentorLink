@@ -13,6 +13,8 @@ namespace Presistence.Repositories
     {
         public async Task AddAsync(TEntity entity) => await _dbcontext.Set<TEntity>().AddAsync(entity);
 
+   
+
         public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbcontext.Set<TEntity>().ToListAsync();
         // Get all entities based on specifications
         public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity> specifications)
@@ -30,6 +32,10 @@ namespace Presistence.Repositories
 
         public void Remove(TEntity entity) => _dbcontext.Set<TEntity>().Remove(entity);
 
-        public void Update(TEntity entity) => _dbcontext.Set<TEntity>().Update(entity);
+        public void Update(TEntity entity) => _dbcontext.Set<TEntity>().Update(entity);    
+        public async Task<int> CountAsync(ISpecifications<TEntity> specifications)
+        {
+            return await SpecificationEvaluator.CreateQuery(_dbcontext.Set<TEntity>(), specifications).CountAsync();
+        }
     }
 }
