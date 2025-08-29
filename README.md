@@ -1,33 +1,41 @@
-# MentorLink Authentication System
+# MentorLink API
 
-This project now includes a complete authentication system with JWT tokens, password hashing, and secure API endpoints.
+[![.NET](https://img.shields.io/badge/.NET-9.0-blue.svg)](https://dotnet.microsoft.com/download/dotnet/9.0)
+[![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-9.0-green.svg)](https://docs.microsoft.com/en-us/aspnet/core/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## Features
+## 📋 Project Overview
 
-- ✅ **Sign Up API**: Register new trainees with validation (email-based)
-- ✅ **Sign In API**: Login with email and password
-- ✅ **Password Hashing**: Secure SHA256 password hashing
-- ✅ **JWT Authentication**: Token-based authentication
-- ✅ **Refresh Tokens**: Automatic token refresh mechanism
-- ✅ **Database Integration**: User data stored in SQL Server
-- ✅ **Error Handling**: Proper error messages for invalid input, incorrect credentials, or existing email
-- ✅ **Protected Endpoints**: Secure API routes
-- ✅ **Input Validation**: Data validation and sanitization
+MentorLink is a comprehensive mentoring platform API built with **ASP.NET Core Web API**. The platform connects trainees with experienced mentors, facilitating knowledge sharing and skill development. The API provides robust authentication, user management, and mentor discovery features.
 
-## API Endpoints
+**Production URL**: [http://mentorlink.runasp.net/](http://mentorlink.runasp.net/)
+
+## ✨ Features
+
+- 🔐 **JWT Authentication** - Secure token-based authentication with refresh tokens
+- 👤 **User Management** - Complete user registration, login, and profile management
+- 🔑 **Password Reset** - Email-based password reset with verification codes
+- 👨‍🏫 **Mentor Discovery** - Search and filter mentors by various criteria
+- 🛡️ **Protected Endpoints** - Role-based access control for secure operations
+- 📧 **Email Integration** - Automated email notifications for password reset
+- 🔄 **Token Refresh** - Automatic token renewal for seamless user experience
+- 🌐 **CORS Support** - Cross-origin resource sharing enabled
+- 📚 **Swagger Documentation** - Interactive API documentation
+
+## 🚀 API Endpoints
 
 ### Authentication Endpoints
 
-#### 1. Sign Up
-```
-POST /api/auth/signup
+#### 1. User Registration
+```http
+POST /api/Auth/signup
 ```
 
 **Request Body:**
 ```json
 {
   "name": "John Doe",
-  "email": "john@example.com",
+  "email": "john.doe@example.com",
   "password": "SecurePass123!",
   "confirmPassword": "SecurePass123!",
   "phone": "12345678901"
@@ -38,7 +46,7 @@ POST /api/auth/signup
 ```json
 {
   "success": true,
-  "message": "Registration successful",
+  "message": "User registered successfully",
   "token": {
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     "refreshToken": "refresh_token_here",
@@ -48,268 +56,404 @@ POST /api/auth/signup
   "user": {
     "traineeId": 1,
     "name": "John Doe",
-    "email": "john@example.com",
+    "email": "john.doe@example.com",
     "phone": "12345678901",
-    "level": "Beginner",
-    "pictureUrl": null
+    "level": "Beginner"
   }
 }
 ```
 
-#### 2. Sign In
-```
-POST /api/auth/signin
+#### 2. User Login
+```http
+POST /api/Auth/signin
 ```
 
 **Request Body:**
 ```json
 {
-  "email": "john@example.com",
+  "email": "john.doe@example.com",
   "password": "SecurePass123!"
 }
 ```
 
-**Response:** Same as Sign Up response
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "token": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "refresh_token_here",
+    "expiresAt": "2024-01-01T12:00:00Z",
+    "tokenType": "Bearer"
+  },
+  "user": {
+    "traineeId": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone": "12345678901",
+    "level": "Beginner"
+  }
+}
+```
 
 #### 3. Refresh Token
-```
-POST /api/auth/refresh-token
+```http
+POST /api/Auth/refresh-token
 ```
 
 **Request Body:**
 ```json
 {
-  "refreshToken": "refresh_token_here"
+  "refreshToken": "your_refresh_token_here"
 }
 ```
 
 #### 4. Logout
-```
-POST /api/auth/logout
+```http
+POST /api/Auth/logout
 ```
 
 **Request Body:**
 ```json
 {
-  "refreshToken": "refresh_token_here"
+  "refreshToken": "your_refresh_token_here"
 }
+```
+
+#### 5. Forgot Password
+```http
+POST /api/Auth/forgot-password
+```
+
+**Request Body:**
+```json
+{
+  "email": "john.doe@example.com"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Password reset code sent to your email",
+  "expiresAt": "2024-01-01T12:05:00Z"
+}
+```
+
+#### 6. Verify Reset Code
+```http
+POST /api/Auth/verify-code
+```
+
+**Request Body:**
+```json
+{
+  "email": "john.doe@example.com",
+  "resetCode": "12345"
+}
+```
+
+#### 7. Reset Password
+```http
+POST /api/Auth/reset-password
+```
+
+**Request Body:**
+```json
+{
+  "email": "john.doe@example.com",
+  "resetCode": "12345",
+  "newPassword": "NewSecurePass123!",
+  "confirmPassword": "NewSecurePass123!"
+}
+```
+
+### Mentor Endpoints
+
+#### 1. Get All Mentors
+```http
+GET /api/Mentor
+```
+
+**Query Parameters:**
+- `searchTerm` (optional): Search mentors by name or skills
+- `level` (optional): Filter by mentor level (Beginner, Intermediate, Advanced)
+- `page` (optional): Page number for pagination
+- `pageSize` (optional): Number of items per page
+
+**Example:**
+```http
+GET /api/Mentor?searchTerm=javascript&level=Advanced&page=1&pageSize=10
+```
+
+**Response:**
+```json
+[
+  {
+    "mentorId": 1,
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "pictureUrl": "https://example.com/avatar.jpg",
+    "level": "Advanced",
+    "skills": ["JavaScript", "React", "Node.js"],
+    "focusAreas": ["Web Development", "Frontend"],
+    "languages": ["English", "Spanish"]
+  }
+]
+```
+
+#### 2. Get Mentor by ID
+```http
+GET /api/Mentor/{id}
+```
+
+**Example:**
+```http
+GET /api/Mentor/1
 ```
 
 ### Protected Endpoints
 
 #### 1. Get User Profile
+```http
+GET /api/Protected/profile
 ```
-GET /api/protected/profile
-Authorization: Bearer {accessToken}
+
+**Headers:**
+```
+Authorization: Bearer your_access_token_here
+```
+
+**Response:**
+```json
+{
+  "message": "This is a protected endpoint",
+  "user": {
+    "userId": "1",
+    "email": "john.doe@example.com",
+    "name": "John Doe",
+    "phone": "12345678901",
+    "level": "Beginner"
+  }
+}
 ```
 
 #### 2. Test Protected Endpoint
+```http
+GET /api/Protected/test
 ```
-GET /api/protected/test
-Authorization: Bearer {accessToken}
+
+**Headers:**
+```
+Authorization: Bearer your_access_token_here
 ```
 
-## Password Requirements
-
-- Minimum 8 characters
-- Maximum 100 characters
-- Must contain at least one uppercase letter
-- Must contain at least one lowercase letter
-- Must contain at least one number
-- Must contain at least one special character (@$!%*?&)
-
-## Phone Requirements
-
-- Exactly 11 digits
-- Numbers only
-
-## JWT Configuration
-
-The JWT configuration is stored in `appsettings.json`:
-
+**Response:**
 ```json
 {
-  "Jwt": {
-    "Secret": "YourSuperSecretKeyHere123456789012345678901234567890123456789012345678901234567890",
-    "Issuer": "MentorLink",
-    "Audience": "MentorLinkUsers",
-    "ExpiryInHours": 1
-  }
+  "message": "Authentication is working! You have access to this protected endpoint."
 }
 ```
 
-## Database Schema
+## 🛠️ How to Run Locally
 
-The `Trainee` table has been updated with authentication fields:
+### Prerequisites
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/)
 
-- `TraineeId` (Primary Key)
-- `Name` (Required, max 50 chars)
-- `Email` (Required, max 100 chars, unique, email format)
-- `PasswordHash` (Required, max 255 chars, SHA256 hashed)
-- `Phone` (Required, exactly 11 digits)
-- `PictureUrl` (Optional, max 200 chars)
-- `Level` (Enum: Beginner, Intermediate, Advanced)
-- `IsUpdated` (Boolean)
-- `IsSubscribed` (Boolean)
-- `SessionId` (Optional, max 100 chars)
-- `RefreshToken` (Optional, max 500 chars)
-- `RefreshTokenExpiryTime` (Optional, DateTime)
-- `CreatedAt` (DateTime, auto-set)
-- `LastLoginAt` (Optional, DateTime)
+### Setup Steps
 
-## Security Features
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/mentorlink-api.git
+   cd mentorlink-api
+   ```
 
-1. **Password Hashing**: Passwords are hashed using SHA256 before storage
-2. **JWT Tokens**: Secure token-based authentication
-3. **Refresh Tokens**: Automatic token refresh mechanism
-4. **Input Validation**: Comprehensive validation on all inputs
-5. **Error Handling**: Secure error messages that don't leak sensitive information
-6. **CORS**: Configured for cross-origin requests
-7. **Token Expiry**: Access tokens expire after 1 hour
-8. **Refresh Token Expiry**: Refresh tokens expire after 7 days
+2. **Restore Dependencies**
+   ```bash
+   dotnet restore
+   ```
 
-## Usage Examples
+3. **Update Database Connection**
+   - Open `MentorLink/appsettings.json`
+   - Update the `DefaultConnection` string with your database details
 
-### Using the API with JavaScript/Fetch
+4. **Run Database Migrations**
+   ```bash
+   cd Presistence
+   dotnet ef database update
+   cd ..
+   ```
+
+5. **Run the Application**
+   ```bash
+   dotnet run --project MentorLink
+   ```
+
+6. **Access the API**
+   - API: `https://localhost:7042/`
+   - Swagger UI: `https://localhost:7042/swagger`
+
+## 🧪 How to Test the API
+
+### Using Swagger UI
+1. Navigate to `https://localhost:7042/swagger` (local) or `http://mentorlink.runasp.net/swagger` (production)
+2. Use the interactive interface to test endpoints
+3. Click "Try it out" on any endpoint
+4. Fill in the required parameters
+5. Click "Execute" to see the response
+
+### Using Postman
+
+#### 1. Register a New User
+```http
+POST http://mentorlink.runasp.net/api/Auth/signup
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "TestPass123!",
+  "confirmPassword": "TestPass123!",
+  "phone": "12345678901"
+}
+```
+
+#### 2. Login
+```http
+POST http://mentorlink.runasp.net/api/Auth/signin
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "TestPass123!"
+}
+```
+
+#### 3. Access Protected Endpoint
+```http
+GET http://mentorlink.runasp.net/api/Protected/profile
+Authorization: Bearer your_access_token_here
+```
+
+#### 4. Get All Mentors
+```http
+GET http://mentorlink.runasp.net/api/Mentor?page=1&pageSize=10
+```
+
+### Using cURL
+
+#### Register User
+```bash
+curl -X POST http://mentorlink.runasp.net/api/Auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "TestPass123!",
+    "confirmPassword": "TestPass123!",
+    "phone": "12345678901"
+  }'
+```
+
+#### Login
+```bash
+curl -X POST http://mentorlink.runasp.net/api/Auth/signin \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "TestPass123!"
+  }'
+```
+
+#### Access Protected Endpoint
+```bash
+curl -X GET http://mentorlink.runasp.net/api/Protected/profile \
+  -H "Authorization: Bearer your_access_token_here"
+```
+
+## 🔐 Authentication
+
+The API uses **JWT (JSON Web Token)** authentication with the following features:
+
+### Token Structure
+- **Access Token**: Short-lived token (1 hour) for API access
+- **Refresh Token**: Long-lived token for obtaining new access tokens
+- **Token Type**: Bearer
+
+### Authentication Flow
+
+1. **Register/Login** → Receive access token and refresh token
+2. **API Calls** → Include access token in Authorization header
+3. **Token Expiry** → Use refresh token to get new access token
+4. **Logout** → Revoke refresh token
+
+### Example Authentication Flow
 
 ```javascript
-// Sign Up
-const signUpResponse = await fetch('/api/auth/signup', {
+// 1. Login
+const loginResponse = await fetch('http://mentorlink.runasp.net/api/Auth/signin', {
   method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    name: 'John Doe',
-    email: 'john@example.com',
-    password: 'SecurePass123!',
-    confirmPassword: 'SecurePass123!',
-    phone: '12345678901'
+    email: 'user@example.com',
+    password: 'password123!'
   })
 });
 
-const signUpData = await signUpResponse.json();
-const accessToken = signUpData.token.accessToken;
+const { token } = await loginResponse.json();
 
-// Access Protected Endpoint
-const profileResponse = await fetch('/api/protected/profile', {
+// 2. Use token for protected requests
+const profileResponse = await fetch('http://mentorlink.runasp.net/api/Protected/profile', {
   headers: {
-    'Authorization': `Bearer ${accessToken}`
+    'Authorization': `Bearer ${token.accessToken}`
   }
 });
 
-const profileData = await profileResponse.json();
+// 3. Refresh token when expired
+const refreshResponse = await fetch('http://mentorlink.runasp.net/api/Auth/refresh-token', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    refreshToken: token.refreshToken
+  })
+});
 ```
 
-### Using the API with Postman
+## 🚀 Deployment
 
-1. **Sign Up**: POST to `{{baseUrl}}/api/auth/signup`
-2. **Sign In**: POST to `{{baseUrl}}/api/auth/signin`
-3. **Protected Endpoints**: Add `Authorization: Bearer {{accessToken}}` header
+The API is currently deployed and accessible at:
+**Production URL**: [http://mentorlink.runasp.net/](http://mentorlink.runasp.net/)
 
-## Error Responses
+### Deployment Features
+- ✅ **HTTPS Enabled** - Secure communication
+- ✅ **CORS Configured** - Cross-origin requests allowed
+- ✅ **Database Connected** - SQL Server backend
+- ✅ **Email Service** - Password reset functionality
+- ✅ **Swagger Documentation** - Interactive API docs
 
-### Validation Errors
-```json
-{
-  "success": false,
-  "message": "Invalid input data"
-}
-```
+## 🤝 Contributing
 
-### Authentication Errors
-```json
-{
-  "success": false,
-  "message": "Invalid email or password"
-}
-```
+We welcome contributions! Please follow these steps:
 
-### Duplicate Email
-```json
-{
-  "success": false,
-  "message": "Email is already registered"
-}
-```
-
-## Running the Project
-
-1. **Build the project:**
+1. **Fork the repository**
+2. **Create a feature branch**
    ```bash
-   dotnet build
+   git checkout -b feature/your-feature-name
    ```
-
-2. **Update the database:**
+3. **Make your changes**
+4. **Add tests** (if applicable)
+5. **Commit your changes**
    ```bash
-   dotnet ef database update --project Presistence
+   git commit -m "Add: your feature description"
    ```
-
-3. **Run the application:**
+6. **Push to the branch**
    ```bash
-   dotnet run
+   git push origin feature/your-feature-name
    ```
+7. **Create a Pull Request**
 
-4. **Access Swagger UI:**
-   ```
-   https://localhost:7001/swagger
-   ```
 
-## Testing the Authentication
-
-1. Use the Sign Up endpoint to create a new user
-2. Use the Sign In endpoint to get an access token
-3. Use the access token in the Authorization header to access protected endpoints
-4. Use the Refresh Token endpoint to get a new access token when it expires
-
-## Project Structure
-
-```
-MentorLink/
-├── DomainLayer/
-│   ├── Models/
-│   │   └── Trainee.cs (Updated with auth fields, no username)
-│   └── Contracts/
-│       ├── IGenericRepository.cs
-│       ├── ITraineeRepository.cs (Updated)
-│       └── IUnitOfWork.cs (Updated)
-├── Presistence/
-│   ├── Data/
-│   │   └── AppDbContext.cs
-│   └── Repositories/
-│       ├── GenericRepository.cs
-│       ├── TraineeRepository.cs (Updated)
-│       └── UnitOfWork.cs (Updated)
-├── Service/
-│   ├── AuthService.cs (Updated for email-only auth)
-│   └── JwtService.cs (Updated)
-├── Shared/
-│   └── DataTransferObjects/
-│       ├── AuthDto.cs (Updated, no username)
-│       └── TraineeDto.cs (Updated, no username)
-└── MentorLink/
-    ├── Controllers/
-    │   ├── AuthController.cs
-    │   └── ProtectedController.cs (Updated)
-    ├── Program.cs (Updated with JWT config)
-    └── appsettings.json (Updated with JWT settings)
-```
-
-## Security Notes
-
-- Change the JWT secret in production
-- Use HTTPS in production
-- Consider implementing rate limiting
-- Consider implementing account lockout after failed attempts
-- Consider implementing email verification
-- Consider implementing password reset functionality
-
-## Key Changes Made
-
-- ✅ **Removed Username field** - Users now authenticate with email only
-- ✅ **Simplified Sign Up** - Only requires: Name, Email, Password, ConfirmPassword, Phone
-- ✅ **Simplified Sign In** - Only requires: Email, Password
-- ✅ **Updated JWT Claims** - Email serves as the name identifier
-- ✅ **Database Migration** - Username column removed from Trainees table
-
-The authentication system is now fully implemented with simplified email-based authentication and ready for use!
