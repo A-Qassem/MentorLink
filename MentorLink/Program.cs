@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Presistence.Data;
 using Presistence.Repositories;
-using DomainLayer.Contracts;
 using Service;
 using ServiceAbstraction;
 using Service.MappingProfiles;
@@ -32,6 +31,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IServiceManager, ServiceManager>();
+builder.Services.AddScoped<IRoadmapService, RoadmapService>();
 
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(AssemblyReference).Assembly));    
 

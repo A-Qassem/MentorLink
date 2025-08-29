@@ -9,5 +9,7 @@ namespace ServiceAbstraction
     public interface IServiceManager
     {
         IMentorService MentorService { get; }
+        ITraineeService TraineeService { get; }
+        IRoadmapAppService RoadmapAppService { get; }
     }
 }

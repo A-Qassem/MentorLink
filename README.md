@@ -214,6 +214,17 @@ GET /api/Mentor/{id}
 GET /api/Mentor/1
 ```
 
+### Trainee Endpoints
+
+#### 1. Delete Trainee
+```http
+DELETE /api/Trainees/{id}
+```
+
+Responses:
+- `204 No Content` → deleted successfully
+- `404 Not Found` → trainee does not exist
+
 ### Protected Endpoints
 
 #### 1. Get User Profile
@@ -254,6 +265,74 @@ Authorization: Bearer your_access_token_here
 ```json
 {
   "message": "Authentication is working! You have access to this protected endpoint."
+}
+```
+
+### Roadmap Endpoints
+
+#### 1. Create a Roadmap (Generate and store HTML)
+```http
+POST /api/Roadmaps?traineeId={traineeId}
+```
+
+Headers:
+```
+Content-Type: application/json
+```
+
+Request Body:
+```json
+{
+  "title": "Full-Stack Web Developer",
+  "difficultyLevel": "Intermediate",
+  "totalDurationMonths": 6,
+  "totalHours": 240,
+  "description": "A guided path to become a full-stack developer focusing on practical skills.",
+  "phases": [
+    {
+      "title": "Foundations",
+      "month": 1,
+      "focus": "HTML, CSS, and JavaScript fundamentals",
+      "skillsGained": ["HTML", "CSS", "JavaScript Basics"],
+      "prerequisites": ["Basic computer literacy"],
+      "recommendedCourses": [
+        "Intro to HTML & CSS - https://example.com/html-css",
+        "JavaScript Basics - https://example.com/js-basics"
+      ],
+      "weeks": [
+        {
+          "week": 1,
+          "focus": "HTML Essentials",
+          "hours": 8,
+          "topics": ["Semantic HTML", "Forms", "Accessibility"],
+          "deliverables": ["Static multi-page site"]
+        }
+      ]
+    }
+  ],
+  "careerOutcomes": ["Junior Full-Stack Developer"]
+}
+```
+
+Responses:
+- `201 Created` → `{ id, html }`
+- `400 Bad Request` → validation errors
+- `404 Not Found` → traineeId not found
+
+Notes:
+- `traineeId` is required as a query parameter and the generated HTML is saved to the trainee's `RoadMap` in the database.
+
+#### 2. Get a Roadmap by Id
+```http
+GET /api/Roadmaps/{id}
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "title": "Full-Stack Web Developer",
+  "html": "<!DOCTYPE html>..."
 }
 ```
 
