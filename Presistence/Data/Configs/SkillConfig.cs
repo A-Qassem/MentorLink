@@ -15,10 +15,10 @@ namespace Presistence.Data.Configs
         public void Configure(EntityTypeBuilder<Skill> builder)
         {
             builder
-            .HasOne(s => s.Mentor)
+            .HasMany(s => s.Mentors)
             .WithMany(m => m.Skills)
-            .HasForeignKey(s => s.MentorId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .UsingEntity(j => j.ToTable("MentorSkills"));
+
         }
     }
 }

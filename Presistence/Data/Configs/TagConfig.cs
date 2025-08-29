@@ -15,10 +15,9 @@ namespace Presistence.Data.Configs
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
             builder
-            .HasOne(t => t.Mentor)
+            .HasMany(t => t.Mentors)
             .WithMany(m => m.Tags)
-            .HasForeignKey(t => t.MentorId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .UsingEntity(j => j.ToTable("MentorTags"));
         }
     }
 }
