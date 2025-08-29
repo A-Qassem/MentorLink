@@ -507,32 +507,3 @@ const refreshResponse = await fetch('http://mentorlink.runasp.net/api/Auth/refre
 The API is currently deployed and accessible at:
 **Production URL**: [http://mentorlink.runasp.net/](http://mentorlink.runasp.net/)
 
-### Deployment Features
-- ✅ **HTTPS Enabled** - Secure communication
-- ✅ **CORS Configured** - Cross-origin requests allowed
-- ✅ **Database Connected** - SQL Server backend
-- ✅ **Email Service** - Password reset functionality
-- ✅ **Swagger Documentation** - Interactive API docs
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork the repository**
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. **Make your changes**
-4. **Add tests** (if applicable)
-5. **Commit your changes**
-   ```bash
-   git commit -m "Add: your feature description"
-   ```
-6. **Push to the branch**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-7. **Create a Pull Request**
-
-
